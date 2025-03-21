@@ -4,6 +4,7 @@ const Redis = require("ioredis");
 
 const redis = new Redis(process.env.UPSTASH_REDIS_URL);
 const app = express();
+app.use(cors({ origin: "http://127.0.0.1:5500" }));
 app.use(cors());
 app.use(express.json());
 
@@ -29,18 +30,6 @@ app.get("/api/leaderboard", async (req, res) => {
     res.json(formattedScores);
 });
 
-app.post("/api/save-player", (req, res) => {
-    const { player, wallet } = req.body;
 
-    if (!player || !wallet) {
-        return res.status(400).json({ message: "Player and wallet are required" });
-    }
-
-    // Save the association (replace with your database logic)
-    players[player] = wallet;
-
-    console.log("Saved association:", players);
-    res.json({ message: "Player association saved successfully" });
-});
 
 module.exports = app;
