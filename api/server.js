@@ -4,8 +4,6 @@ const Redis = require("ioredis");
 
 const redis = new Redis(process.env.UPSTASH_REDIS_URL);
 const app = express();
-app.use(cors({ origin: "http://127.0.0.1:5500" }));
-app.use(cors({ origin: "http://127.0.0.1:5501" }));
 app.use(cors());
 app.use(express.json());
 
