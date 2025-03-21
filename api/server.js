@@ -30,5 +30,23 @@ app.get("/api/leaderboard", async (req, res) => {
 });
 
 
+app.delete("/api/delete", async (req, res) => {
+    try {
+        // Delete the entire leaderboard key
+        const result = await redis.del("leaderboard");
+
+        if (result === 0) {
+            return res.status(404).json({ error: "Leaderboard is already empty or does not exist" });
+        }
+
+        res.json({ message: "Leaderboard cleared successfully!" });
+    } catch (error) {
+        console.error("Error clearing leaderboard:", error);
+        res.status(500).json({ error: "Failed to clear leaderboard" });
+    }
+});
+
+
+
 
 module.exports = app;
